@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { Pressable, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { COLORS } from "../../constants/colors";
+import { COLORS } from "../../../../constants/colors";
 
 export default function GamesScreen() {
   return (
@@ -18,7 +18,7 @@ export default function GamesScreen() {
       </Text>
 
       {/* Broken Letter Game Card */}
-      <Link href="/games/brokenletter" asChild>
+      <Link href="/modules/letter_identification/games/brokenletter" asChild>
         <Pressable
           style={{
             backgroundColor: COLORS.card,

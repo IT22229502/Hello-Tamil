@@ -15,10 +15,12 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import ViewShot, { captureRef } from "react-native-view-shot";
 
-import DrawingCanvas, { DrawingCanvasRef } from "../components/DrawingCanvas";
-import { COLORS } from "../constants/colors";
-import { speak } from "../lib/tts";
-import { predictFromUri } from "../services/predictionService";
+import DrawingCanvas, {
+  DrawingCanvasRef,
+} from "../../../components/DrawingCanvas";
+import { COLORS } from "../../../constants/colors";
+import { speak } from "../../../lib/tts";
+import { predictFromUri } from "../../../services/predictionService";
 
 /* ---------- Small UI helpers ---------- */
 function Tile({
@@ -105,6 +107,7 @@ function ActionButton({
 }
 
 /* ==================== MAIN ==================== */
+
 export default function Home() {
   const level = 1;
   const points = 80;
@@ -114,7 +117,9 @@ export default function Home() {
 
   const [busy, setBusy] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
-  const [pred, setPred] = useState<{ label: string; prob: number } | null>(null);
+  const [pred, setPred] = useState<{ label: string; prob: number } | null>(
+    null,
+  );
   const shotRef = useRef<ViewShot>(null);
   const canvasRef = useRef<DrawingCanvasRef>(null);
   const [showResult, setShowResult] = useState(false);
@@ -123,13 +128,19 @@ export default function Home() {
   const W = Dimensions.get("window").width;
   const H = Dimensions.get("window").height;
   const SHEET_HEIGHT = Math.round(H * 0.6);
-  const CANVAS_HEIGHT = Math.max(240, Math.min(320, Math.round(SHEET_HEIGHT * 0.45)));
+  const CANVAS_HEIGHT = Math.max(
+    240,
+    Math.min(320, Math.round(SHEET_HEIGHT * 0.45)),
+  );
 
   const onPredict = async () => {
     try {
       const hasDrawing = canvasRef.current?.hasDrawing?.();
       if (!hasDrawing) {
-        Alert.alert("✍️ Please write something first!", "Try drawing a letter before predicting.");
+        Alert.alert(
+          "✍️ Please write something first!",
+          "Try drawing a letter before predicting.",
+        );
         return;
       }
 
@@ -160,9 +171,17 @@ export default function Home() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }} edges={["top", "left", "right"]}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: COLORS.bg }}
+      edges={["top", "left", "right"]}
+    >
       <ScrollView
-        contentContainerStyle={{ padding: 16, gap: 16, paddingBottom: 28, flexGrow: 1 }}
+        contentContainerStyle={{
+          padding: 16,
+          gap: 16,
+          paddingBottom: 28,
+          flexGrow: 1,
+        }}
       >
         {/* HERO */}
         <View
@@ -178,7 +197,7 @@ export default function Home() {
             🌟 Welcome back!
           </Text>
           <Text style={{ color: COLORS.text, marginTop: 4 }}>
-            ⭐ Level {level}   ·   🔥 Streak {streak}
+            ⭐ Level {level} · 🔥 Streak {streak}
           </Text>
 
           <View
@@ -202,7 +221,7 @@ export default function Home() {
             Progress: {points}/{target}
           </Text>
 
-          <Link href="/reports" asChild>
+          <Link href="/modules/bilingual_translation" asChild>
             <Pressable
               style={{
                 marginTop: 10,
@@ -216,31 +235,63 @@ export default function Home() {
               }}
             >
               <Text style={{ fontWeight: "900", color: COLORS.navy }}>
-                📈 View full report Study Exercise 
+                📈 View full report Study Exercise
               </Text>
             </Pressable>
           </Link>
         </View>
 
         {/* NAV TILES */}
-        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 8,
+          }}
+        >
           <View style={{ flex: 1, marginRight: 6 }}>
-            <Tile title="Training" subtitle="Learn letters with AI" href="/training" emoji="🧑‍🏫" />
+            <Tile
+              title="Training"
+              subtitle="Learn letters with AI"
+              href="/modules/letter_identification/training"
+              emoji="🧑‍🏫"
+            />
           </View>
 
           <View style={{ flex: 1, marginLeft: 6 }}>
-            <Tile title="Games" subtitle="Play & test your skills" href="/games" emoji="🎮" />
+            <Tile
+              title="Games"
+              subtitle="Play & test your skills"
+              href="/modules/letter_identification/games"
+              emoji="🎮"
+            />
           </View>
         </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 8,
+          }}
+        >
           <View style={{ flex: 1, marginRight: 6 }}>
-            <Tile title="Reports" subtitle="Parent/Teacher summary" href="/reports" emoji="📈" />
+            <Tile
+              title="Reports"
+              subtitle="Parent/Teacher summary"
+              href="/modules/letter_identification/reports"
+              emoji="📈"
+            />
           </View>
 
           <View style={{ flex: 1, marginLeft: 6 }}>
-            <Tile title="Study Exersice" subtitle="Play & test your skills" href="/games" emoji="🎮" />
+            <Tile
+              title="Study Exersice"
+              subtitle="Play & test your skills"
+              href="/modules/bilingual_translation"
+              emoji="🎮"
+            />
           </View>
-        </View>      
+        </View>
         {/* Reports tile */}
 
         {/* Tap to practice */}
@@ -307,7 +358,9 @@ export default function Home() {
             }}
           >
             <Text style={{ color: COLORS.text }}>I think this is</Text>
-            <Text style={{ fontSize: 64, fontWeight: "900", color: COLORS.navy }}>
+            <Text
+              style={{ fontSize: 64, fontWeight: "900", color: COLORS.navy }}
+            >
               {pred.label}
             </Text>
             <Text style={{ color: COLORS.text }}>
@@ -316,7 +369,9 @@ export default function Home() {
 
             {preview && (
               <View style={{ marginTop: 8, alignItems: "center" }}>
-                <Text style={{ color: COLORS.text, marginBottom: 6 }}>Your drawing</Text>
+                <Text style={{ color: COLORS.text, marginBottom: 6 }}>
+                  Your drawing
+                </Text>
                 <Image
                   source={{ uri: preview }}
                   style={{
@@ -355,7 +410,11 @@ export default function Home() {
         transparent
         onRequestClose={() => setShowSheet(false)}
       >
-        <BlurView intensity={50} tint="light" style={{ flex: 1, justifyContent: "flex-end" }}>
+        <BlurView
+          intensity={50}
+          tint="light"
+          style={{ flex: 1, justifyContent: "flex-end" }}
+        >
           <View
             style={{
               height: SHEET_HEIGHT,
@@ -368,7 +427,13 @@ export default function Home() {
             }}
           >
             {/* sheet header */}
-            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 8,
+              }}
+            >
               <Text
                 style={{
                   fontSize: 18,
@@ -393,7 +458,15 @@ export default function Home() {
                   borderColor: COLORS.border,
                 }}
               >
-                <Text style={{ fontSize: 18, fontWeight: "900", color: COLORS.navy }}>✕</Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "900",
+                    color: COLORS.navy,
+                  }}
+                >
+                  ✕
+                </Text>
               </Pressable>
             </View>
 
@@ -423,7 +496,12 @@ export default function Home() {
                 disabled={busy}
                 tone="yellow"
               />
-              <ActionButton title="Clear" emoji="🧼" onPress={onClear} tone="gray" />
+              <ActionButton
+                title="Clear"
+                emoji="🧼"
+                onPress={onClear}
+                tone="gray"
+              />
               <ActionButton
                 title="Hear"
                 emoji="🔊"

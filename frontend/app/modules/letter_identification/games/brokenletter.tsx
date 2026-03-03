@@ -12,9 +12,9 @@ import {
     View,
 } from 'react-native';
 
-import { COLORS } from '../../constants/colors';
-import { TAMIL_LETTERS } from '../../constants/tamilLetters';
-import { speak } from '../../lib/tts';
+import { COLORS } from '../../../../constants/colors';
+import { TAMIL_LETTERS } from '../../../../constants/tamilLetters';
+import { speak } from '../../../../lib/tts';
 
 /* ================= Broken Letter View ================= */
 
