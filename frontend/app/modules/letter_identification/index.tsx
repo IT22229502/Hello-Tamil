@@ -252,7 +252,7 @@ export default function Home() {
           <View style={{ flex: 1, marginRight: 6 }}>
             <Tile
               title="Training"
-              subtitle="Learn letters with AI"
+              subtitle="Learn tamil letters with AI"
               href="/modules/letter_identification/training"
               emoji="🧑‍🏫"
             />
@@ -260,7 +260,7 @@ export default function Home() {
 
           <View style={{ flex: 1, marginLeft: 6 }}>
             <Tile
-              title="Games"
+              title="Play Games"
               subtitle="Play & test your skills"
               href="/modules/letter_identification/games"
               emoji="🎮"
@@ -285,7 +285,7 @@ export default function Home() {
 
           <View style={{ flex: 1, marginLeft: 6 }}>
             <Tile
-              title="Study Exersice"
+              title="Study Exersices"
               subtitle="Play & test your skills"
               href="/modules/bilingual_translation"
               emoji="🎮"
