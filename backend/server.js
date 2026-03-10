@@ -21,11 +21,17 @@ app.get("/", (req, res) => {
   res.send("Hello Tamil Backend Running");
 });
 
+app.get("/test", (req, res) => {
+  res.json({ message: "Backend connected" });
+});
+
 
 /* Start Server */
 
 const PORT = 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Access at: http://localhost:${PORT}`);
+  console.log(`Or from other devices at: http://10.138.78.116:${PORT}`);
 });

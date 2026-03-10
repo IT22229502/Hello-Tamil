@@ -34,7 +34,7 @@ exports.analyzeDrawing = async (req,res)=>{
     const drawing = req.body.drawing;
 
     const result =
-      await writingService.evaluateWriting(drawing);
+      await writingService.evaluateDrawing(drawing);
 
     res.json(result);
 

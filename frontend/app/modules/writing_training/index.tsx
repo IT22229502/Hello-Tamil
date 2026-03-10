@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, Button, Image, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  Image,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { analyzeImage } from "@/services/writingService";
 import { useRouter } from "expo-router";
@@ -7,10 +15,9 @@ import { useRouter } from "expo-router";
 export default function WritingTraining() {
 
   const router = useRouter();
-
   const [image, setImage] = useState<string | null>(null);
 
-  /* PICK IMAGE FROM GALLERY */
+  /* PICK IMAGE */
 
   const pickImage = async () => {
 
@@ -18,23 +25,18 @@ export default function WritingTraining() {
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (!permission.granted) {
-      Alert.alert(
-        "Permission required",
-        "Please allow gallery access."
-      );
+      Alert.alert("Permission required");
       return;
     }
 
-    const pickerResult =
-      await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["images"],
-        quality: 1
-      });
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      quality: 1,
+    });
 
-    if (!pickerResult.canceled) {
-      setImage(pickerResult.assets[0].uri);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
-
   };
 
   /* TAKE PHOTO */
@@ -49,24 +51,16 @@ export default function WritingTraining() {
       return;
     }
 
-    try {
+    const result = await ImagePicker.launchCameraAsync({
+      quality: 1,
+    });
 
-      const cameraResult =
-        await ImagePicker.launchCameraAsync({
-          quality: 1
-        });
-
-      if (!cameraResult.canceled) {
-        setImage(cameraResult.assets[0].uri);
-      }
-
-    } catch (error) {
-      console.log("Camera Error:", error);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
-
   };
 
-  /* SEND IMAGE TO BACKEND */
+  /* SEND IMAGE TO MODEL */
 
   const uploadImage = async () => {
 
@@ -79,27 +73,23 @@ export default function WritingTraining() {
 
       const data = await analyzeImage(image);
 
-      /* NAVIGATE TO RESULT SCREEN */
-
       router.push({
         pathname: "/modules/writing_training/ResultScreen",
         params: {
           result: JSON.stringify(data),
-          originalImage: image
-        }
+          originalImage: image,
+        },
       });
 
     } catch (error) {
 
-      console.log("Upload Error:", error);
+      console.log(error);
 
       Alert.alert(
         "Error",
-        "Failed to analyze image."
+        "Failed to analyze image"
       );
-
     }
-
   };
 
   return (
@@ -107,10 +97,10 @@ export default function WritingTraining() {
     <View style={styles.container}>
 
       <Text style={styles.title}>
-        Spatial Model Evaluation
+        Writing Training
       </Text>
 
-      <View style={styles.buttons}>
+      <View style={styles.buttonRow}>
 
         <Button
           title="Pick Image"
@@ -132,42 +122,68 @@ export default function WritingTraining() {
       )}
 
       <Button
-        title="Upload to Models"
+        title="Upload to Model"
         onPress={uploadImage}
       />
+
+      {/* SPACE RACE TRAINING BUTTON */}
+
+      <TouchableOpacity
+        style={styles.practiceBtn}
+        onPress={() =>
+          router.push("/modules/writing_training/SpaceRaceTraining")
+        }
+      >
+        <Text style={styles.practiceText}>
+          ✍️ Space Race Training
+        </Text>
+      </TouchableOpacity>
 
     </View>
 
   );
-
 }
 
 const styles = StyleSheet.create({
 
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#FFF9E6"
+  container:{
+    flex:1,
+    padding:20,
+    backgroundColor:"#FFF9E6",
   },
 
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center"
+  title:{
+    fontSize:22,
+    fontWeight:"bold",
+    marginBottom:20,
+    textAlign:"center",
   },
 
-  buttons: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20
+  buttonRow:{
+    flexDirection:"row",
+    justifyContent:"space-between",
+    marginBottom:20,
   },
 
-  image: {
-    width: "100%",
-    height: 220,
-    borderRadius: 10,
-    marginBottom: 20
-  }
+  image:{
+    width:"100%",
+    height:220,
+    borderRadius:10,
+    marginBottom:20,
+  },
+
+  practiceBtn:{
+    backgroundColor:"#2BB3A3",
+    padding:15,
+    borderRadius:12,
+    marginTop:20,
+    alignItems:"center",
+  },
+
+  practiceText:{
+    color:"#fff",
+    fontSize:16,
+    fontWeight:"bold",
+  },
 
 });

@@ -3,11 +3,29 @@ import * as FileSystem from "expo-file-system/legacy";
 
 /*
 Change this if using real device
-Example:
-http://192.168.1.3:3000
+For LOCAL TESTING: http://localhost:3000
+For REAL DEVICE: http://192.168.1.4:3000
+
+Machine IP: 192.168.1.4 (from WiFi adapter)
 */
 
-const API_URL = "http://192.168.1.3:3000";
+const API_URL = "http://10.138.78.116:3000";
+
+/* Helper function to get better error messages */
+const handleApiError = (error: any, operation: string) => {
+  if (error.response) {
+    // Server responded with error status
+    console.error(`${operation} - Server Error:`, error.response.status, error.response.data);
+  } else if (error.request) {
+    // Request made but no response
+    console.error(`${operation} - No Response:`, error.request);
+    console.error("Check if backend server is running at:", API_URL);
+    console.error("Check your network connection and firewall settings");
+  } else {
+    // Error in request setup
+    console.error(`${operation} - Error:`, error.message);
+  }
+};
 
 /* ============================= */
 /* Activity 1 : Image Upload     */
@@ -43,6 +61,9 @@ export const analyzeImage = async (imageUri: string) => {
       encoding: 'base64',
     });
 
+    console.log("Sending image to:", API_URL);
+    console.log("Image size:", fileInfo.size, "bytes");
+
     /* Send to backend */
 
     const response = await axios.post(
@@ -63,6 +84,7 @@ export const analyzeImage = async (imageUri: string) => {
   } catch (error) {
 
     console.error("Analyze Image Error:", error);
+    handleApiError(error, "Analyze Image");
 
     throw error;
   }
@@ -81,24 +103,30 @@ export const analyzeDrawing = async (drawingBase64: string) => {
       throw new Error("No drawing data provided");
     }
 
-    const response = await axios.post(
-      `${API_URL}/writing/analyze-drawing`,
-      {
-        drawing: drawingBase64,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        timeout: 30000,
-      }
-    );
+    const url = "http://10.138.78.116:3000/writing/analyze-drawing";
+    const body = { drawing: drawingBase64 };
 
-    return response.data;
+    console.log("[analyzeDrawing] sending to URL:", url);
+    console.log("[analyzeDrawing] payload length:", drawingBase64.length);
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => '');
+      throw new Error(`Request failed (${response.status}): ${text}`);
+    }
+
+    const data = await response.json();
+    return data;
 
   } catch (error) {
 
     console.error("Analyze Drawing Error:", error);
+    handleApiError(error, "Analyze Drawing");
 
     throw error;
 

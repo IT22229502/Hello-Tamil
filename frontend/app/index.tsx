@@ -5,7 +5,7 @@ import { Link } from "expo-router";
 export default function MainHome() {
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
 
         {/* Banner */}
         <Image
@@ -15,12 +15,11 @@ export default function MainHome() {
         />
 
         <Text style={styles.subtitle}>
-          Fun Tamil Learning for Kids 🎉
+          Fun Tamil Learning for Kids
         </Text>
 
         {/* Module Cards */}
         <View style={styles.cardContainer}>
-
           <ModuleCard
             title="Letter Identification"
             emoji="🔤"
@@ -44,7 +43,6 @@ export default function MainHome() {
             emoji="✏️"
             href="/modules/writing_training"
           />
-
         </View>
 
       </ScrollView>
@@ -52,15 +50,7 @@ export default function MainHome() {
   );
 }
 
-function ModuleCard({
-  title,
-  emoji,
-  href,
-}: {
-  title: string;
-  emoji: string;
-  href: any;
-}) {
+function ModuleCard({ title, emoji, href }: any) {
   return (
     <Link href={href} asChild>
       <Pressable style={styles.card}>
@@ -72,23 +62,16 @@ function ModuleCard({
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: "#FFF9E6",
-    paddingHorizontal: 20,
+    padding: 20,
   },
-
-  scrollContent: {
-    paddingBottom: 40,
-  },
-
   banner: {
     width: "100%",
     height: 180,
     marginTop: 10,
   },
-
   subtitle: {
     textAlign: "center",
     fontSize: 16,
@@ -96,35 +79,27 @@ const styles = StyleSheet.create({
     color: "#333",
     fontWeight: "600",
   },
-
   cardContainer: {
     marginTop: 10,
   },
-
   card: {
     backgroundColor: "#FFFFFF",
     padding: 20,
     borderRadius: 25,
     marginBottom: 15,
     alignItems: "center",
-
     shadowColor: "#000",
     shadowOpacity: 0.08,
     shadowRadius: 8,
-
     elevation: 4,
   },
-
   emoji: {
     fontSize: 40,
   },
-
   cardText: {
     marginTop: 8,
     fontSize: 16,
     fontWeight: "700",
     textAlign: "center",
-    color: "#333",
   },
-
 });
