@@ -12,8 +12,8 @@ import {
 import { Audio } from "expo-av";
 import { useLocalSearchParams } from "expo-router";
 
-const NODE_BASE = "http://10.95.198.232:8001";
-const AI_BASE = "http://10.95.198.232:5001";
+const NODE_BASE = "http://172.27.26.232:8001";
+const AI_BASE = "http://172.27.26.232:5001";
 
 export default function Practice() {
   const params = useLocalSearchParams();

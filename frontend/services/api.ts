@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosError } from "axios";
 
 // Fixed backend URL - update this to match your backend server
-const BASE_URL = "http://10.95.198.232:8001/api";
+const BASE_URL = "http://172.27.26.232:8001/api";
 
 // Create Axios instance with fixed configuration
 const api: AxiosInstance = axios.create({
