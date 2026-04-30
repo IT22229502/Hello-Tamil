@@ -1,14 +1,12 @@
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
-import { Pressable } from "react-native";
 
 export default function MainHome() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
-        
-        {/* Banner */}
+
         <Image
           source={require("../assets/images/hello_tamil_banner.png")}
           style={styles.banner}
@@ -19,28 +17,32 @@ export default function MainHome() {
           Fun Tamil Learning for Kids 🎉
         </Text>
 
-        {/* Module Cards */}
         <View style={styles.cardContainer}>
+
           <ModuleCard
             title="Letter Identification"
             emoji="🔤"
             href="/modules/letter_identification"
           />
+
           <ModuleCard
             title="Bilingual Translation"
             emoji="🌍"
             href="/modules/bilingual_translation"
           />
+
           <ModuleCard
             title="Speech Training"
             emoji="🎤"
             href="/modules/speech_training"
           />
+
           <ModuleCard
             title="Writing Training"
             emoji="✏️"
             href="/modules/writing_training"
           />
+
         </View>
 
       </ScrollView>
