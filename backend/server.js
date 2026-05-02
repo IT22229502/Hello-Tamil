@@ -33,5 +33,8 @@ const PORT = 3000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Access at: http://localhost:${PORT}`);
-  console.log(`Or from other devices at: http://10.138.78.116:${PORT}`);
+  console.log(`Or from other devices at: http://10.225.125.116:${PORT}`);
 });
+
+
+

@@ -9,7 +9,7 @@ For REAL DEVICE: http://192.168.1.4:3000
 Machine IP: 192.168.1.4 (from WiFi adapter)
 */
 
-const API_URL = "http://10.138.78.116:3000";
+const API_URL = "http://10.225.125.116:3000";
 
 /* Helper function to get better error messages */
 const handleApiError = (error: any, operation: string) => {
@@ -103,7 +103,7 @@ export const analyzeDrawing = async (drawingBase64: string) => {
       throw new Error("No drawing data provided");
     }
 
-    const url = "http://10.138.78.116:3000/writing/analyze-drawing";
+   const url = `${API_URL}/writing/analyze-drawing`;
     const body = { drawing: drawingBase64 };
 
     console.log("[analyzeDrawing] sending to URL:", url);
