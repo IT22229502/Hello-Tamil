@@ -287,7 +287,7 @@ export default function Home() {
             <Tile
               title="Study Exersice"
               subtitle="Play & test your skills"
-              href="/modules/bilingual_translation"
+              href="/modules/letter_identification/reports"
               emoji="🎮"
             />
           </View>
