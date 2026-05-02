@@ -124,6 +124,7 @@ export const emojiMap: any = {
     hair: "💇"
   },
 
+
   nature: {
     sun: "☀️",
     moon: "🌙",
@@ -135,5 +136,28 @@ export const emojiMap: any = {
     rain: "🌧️",
     cloud: "☁️",
     wind: "💨"
-  }
+  },
+  
+  sentences: {
+  running: "🏃",
+  eating_rice: "🍚",
+  sun_rising: "🌅",
+  mother_cooking: "👩‍🍳",
+  kite_flying: "🪁",
+  children_playing: "🧒",
+  bird_singing: "🐦",
+  dog_barking: "🐕",
+  rain_falling: "🌧️",
+  girl_reading: "📖",
+  boy_writing: "✍️",
+  father_driving: "🚗",
+  baby_sleeping: "👶",
+  teacher_teaching: "👨‍🏫",
+  students_studying: "🎓",
+  cat_sleeping: "🐱",
+  car_moving: "🚘",
+  water_flowing: "💧",
+  man_walking: "🚶",
+  girl_dancing: "💃"
+}
 };
